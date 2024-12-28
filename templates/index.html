@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stir Tech Assignment</title>
+    <script>
+        async function runScraper() {
+            const response = await fetch('/run-scraper');
+            const data = await response.json();
+
+            // Display results dynamically
+            if (data.error) {
+                document.getElementById('results').innerHTML = `Error: ${data.error}`;
+            } else {
+                document.getElementById('results').innerHTML = `
+                    These are the most happening topics as on ${data.date_time}:<br>
+                    - ${data.trend1}<br>
+                    - ${data.trend2}<br>
+                    - ${data.trend3}<br>
+                    - ${data.trend4}<br>
+                    - ${data.trend5}<br>
+                    The IP address used for this query was ${data.ip_address}.<br>
+                    Here's a JSON extract of this record from the MongoDB:
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Stir Tech Assignment - Trending Topics</h1>
+    <button onclick="runScraper()">Click here to run the script</button>
+    <div id="results"></div>
+</body>
+</html>
